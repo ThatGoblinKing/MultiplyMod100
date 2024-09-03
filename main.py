@@ -16,13 +16,17 @@
 # circleY = k//10 + 1
 import math
 
-PADDING = 5
+PADDING = 10
 RADIUS = 35
+ROW_LENGTH = 10
+SCREEN_RATIO = 2/1
+SCREEN_X = PADDING * (ROW_LENGTH + 1) + (2 * RADIUS * ROW_LENGTH)
+SCREEN_SIZE = (SCREEN_X, SCREEN_X / SCREEN_RATIO)
 
 import pygame
 pygame.init()
 pygame.display.set_caption("easy platformer")  # sets the window title
-screen = pygame.display.set_mode((500, 1000))  # creates game screen
+screen = pygame.display.set_mode(SCREEN_SIZE)  # creates game screen
 screen.fill((0, 0, 0))
 clock = pygame.time.Clock()  # set up clock
 gameover = False  # variable to run our game loop
@@ -40,10 +44,10 @@ while not gameover:  # GAME LOOP################################################
     screen.fill((0,0,0))
     for k in range(2,52):
         circleNum = k-2
-        xOffset = (circleNum%5)+1
-        yOffset = (circleNum//5)+1
-        x = xOffset * PADDING * 2 + xOffset * RADIUS * 2
-        y = yOffset * PADDING * 2 + yOffset * RADIUS * 2
+        xOffset = (circleNum%ROW_LENGTH) + 1
+        yOffset = (circleNum//ROW_LENGTH) + 1
+        x = (xOffset * PADDING) + ((xOffset - .5) * RADIUS * 2)
+        y = (yOffset * PADDING) + ((yOffset - .5) * RADIUS * 2)
         oldTheta = 0
         pygame.draw.circle(screen,(255,255,255),(x, y), RADIUS, 1)
         for i in range(1,100):
